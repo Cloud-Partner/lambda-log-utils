@@ -6,11 +6,5 @@ setup(
     install_requires=[
         "aws-lambda-powertools==0.8.1"
     ],
-    extras_require={
-        "develop": [
-            "pytest",
-            "pytest-mock"
-        ]
-    },
     packages=find_packages(exclude=['tests*'])
 )
