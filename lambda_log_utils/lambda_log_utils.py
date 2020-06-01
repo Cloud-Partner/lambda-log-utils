@@ -8,8 +8,9 @@ import json
 
 class Utils:
 
-    logger = Logger()
-    tracer = Tracer()
+    def __init__(self):
+        self.logger = Logger()
+        self.tracer = Tracer()
 
     def set_trace_id(self, lambda_handler):
         def get_trace_id(raw_trace_id):
