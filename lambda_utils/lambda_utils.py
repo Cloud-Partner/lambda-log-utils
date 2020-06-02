@@ -1,5 +1,6 @@
 from aws_lambda_powertools.logging import Logger
 from aws_lambda_powertools.tracing import Tracer
+from os import urandom
 import os
 import time
 import binascii
@@ -28,7 +29,7 @@ class Utils:
                 START_TIME = time.time()
                 HEX = hex(int(START_TIME))[2:]
                 os.environ['trace_id'] = "0-{}-{}".format(
-                    HEX, str(binascii.hexlify(os.urandom(12)), 'utf-8'))
+                    HEX, str(binascii.hexlify(urandom(12)), 'utf-8'))
             self.logger.structure_logs(
                 append=True, trace_id=os.environ['trace_id'])
             self.logger.info(os.environ.get('trace_id'))
@@ -52,7 +53,8 @@ class Utils:
                 self.logger.exception(body)
                 self.tracer.put_annotation(
                     "ErrorCode", body.__class__.__name__)
-                self.tracer.put_annotation("ErrorMessage", "{}".format(body))
+                self.tracer.put_annotation(
+                    "ErrorMessage", "{}".format(body))
                 res = {
                     "isBase64Encoded": False,
                     "statusCode": status,
