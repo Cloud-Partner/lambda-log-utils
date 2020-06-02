@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="lambda_utils",
-    version="0.1",
+    version="0.2.0",
     install_requires=[
         "aws-lambda-powertools==0.8.1"
     ],

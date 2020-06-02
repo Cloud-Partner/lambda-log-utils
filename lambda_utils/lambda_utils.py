@@ -70,7 +70,7 @@ class Utils:
                 }
 
             else:
-                if isinstance(body, str) is False:
+                if body is not None and isinstance(body, str) is False:
                     body = json.dumps(body)
 
                 res = {
@@ -79,8 +79,9 @@ class Utils:
                     'headers': {
                         "Access-Control-Allow-Origin": "*",
                         "Content-Type": "application/json"
-                    },
-                    'body': body
+                    }
                 }
+                if body is not None:
+                    res['body'] = body
             return res
         return decorate

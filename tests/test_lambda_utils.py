@@ -318,6 +318,44 @@ class Test_api_gateway_response:
             'body': json.dumps({"key": "value"})
         }
 
+    def test_none_body_response(self, event, context):
+
+        utils = lambda_utils.Utils()
+
+        @utils.api_gateway_response
+        def handler(evt, ctx):
+            return None
+
+        res = handler(event, context)
+
+        assert res == {
+            'isBase64Encoded': False,
+            'statusCode': 200,
+            'headers': {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+            }
+        }
+
+    def test_none_body_204_response(self, event, context):
+
+        utils = lambda_utils.Utils()
+
+        @utils.api_gateway_response
+        def handler(evt, ctx):
+            return (None, 204)
+
+        res = handler(event, context)
+
+        assert res == {
+            'isBase64Encoded': False,
+            'statusCode': 204,
+            'headers': {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+            }
+        }
+
     def test_400_exception(self, event, context):
         os.environ['trace_id'] = "1-5eb5a279-87b966d0c206d010a3ddf0e8"
 
